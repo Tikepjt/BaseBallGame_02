@@ -1,5 +1,6 @@
 package com.example.summit.baseballgame_02;
 
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding mBinding;
     MyRecyclerViewAdapter mAdapter;
     ArrayList<RoundItem> mArrRoundResultItem;
+    private Button mButton;
 
     int rNumber[];
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         rNumber = new int[3];
         {
@@ -113,6 +116,27 @@ public class MainActivity extends AppCompatActivity {
 
                 mBinding.userInputEdt.setText("");
 
+            }
+        });
+
+        mButton = findViewById(R.id.reset_button);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mArrRoundResultItem.clear();
+                mAdapter.notifyDataSetChanged();
+                rNumber = new int[3];
+                {
+                    rNumber[0] = Math.abs((int) System.currentTimeMillis() % 10);
+                    rNumber[1] = Math.abs((int) System.currentTimeMillis() / 100 % 10);
+                    rNumber[2] = Math.abs((int) System.currentTimeMillis() / 1000 % 10);
+                }
+
+
+                Log.d("=-=-=-", "" + rNumber[0]
+                        + "" + rNumber[1]
+                        + "" + rNumber[2]);
             }
         });
 
